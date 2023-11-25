@@ -16,8 +16,17 @@ export class UsersService {
     return this.usersRepository.save(createUserDto);
   }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  async findAll({ page = 1, pageSize = 20 }): Promise<any> {
+    const [result, total] = await this.usersRepository.findAndCount({
+      order: { id: 'DESC' },
+      take: pageSize,
+      skip: (page - 1) * pageSize,
+    });
+
+    return {
+      data: result,
+      count: total,
+    };
   }
 
   async findOne(id: number) {
