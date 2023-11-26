@@ -27,7 +27,7 @@ export class UsersController {
   }
 
   @Get()
-  findAll(@Query() paginationUserDto: PaginationUserDto) {
+  findAll(@Query() paginationUserDto?: PaginationUserDto) {
     return this.usersService.findAll(paginationUserDto);
   }
 
