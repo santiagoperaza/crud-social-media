@@ -21,11 +21,16 @@ export class User {
   lastName: string;
 
   @Column({ select: false })
-  password: string;
+  password?: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+}
+
+export interface PaginatedUserData {
+  data: User[];
+  total: number;
 }
