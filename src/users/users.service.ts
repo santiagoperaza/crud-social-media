@@ -53,7 +53,6 @@ export class UsersService implements OnModuleInit {
     // Exclude password from return
     return {
       id: user.id,
-      password: user.password,
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
