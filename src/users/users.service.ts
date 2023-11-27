@@ -46,13 +46,14 @@ export class UsersService implements OnModuleInit {
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const user = await this.usersRepository.save(
       this.usersRepository.create({
-        password: hashedPassword,
         ...createUserDto,
+        password: hashedPassword,
       }),
     );
     // Exclude password from return
     return {
       id: user.id,
+      password: user.password,
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -80,8 +81,24 @@ export class UsersService implements OnModuleInit {
     return this.getUserIfExists(id);
   }
 
+  /**
+   * By default, password is not retrieved from DB for security.
+   * This method is used for login, hence we need to retrieve password value.
+   * @param email
+   */
+  findOneBy(email: string): Promise<User> {
+    return this.usersRepository.findOne({
+      select: ['id', 'email', 'password'],
+      where: { email },
+    });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     await this.getUserIfExists(id);
+    if (updateUserDto.password) {
+      const hashedPassword = await bcrypt.hash(updateUserDto.password, 10);
+      updateUserDto = { ...updateUserDto, password: hashedPassword };
+    }
     await this.usersRepository.update(id, updateUserDto);
     return this.getUserIfExists(id);
   }

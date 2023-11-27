@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 
 const USERS = [
   {
@@ -51,7 +52,9 @@ const MOCK_UPDATED_USER = {
 
 const VALID_USER_ID = 3;
 const NOT_FOUND_USER_ID = 999;
+const NOT_FOUND_USER_EMAIL = 'email@test.com';
 const FIND_AND_COUNT = [USERS, 10];
+const MOCK_HASHED_PASSWORD = '123hashedPassword789';
 
 const VALID_CREATE_USER_DTO = {
   email: USER.email,
@@ -82,6 +85,7 @@ describe('UsersService', () => {
         {
           provide: getRepositoryToken(User),
           useValue: {
+            findOne: jest.fn().mockResolvedValue({}),
             findOneBy: jest.fn().mockResolvedValue({}),
             findAndCount: jest.fn().mockResolvedValue(FIND_AND_COUNT),
             create: jest.fn().mockReturnValue(USER),
@@ -143,6 +147,18 @@ describe('UsersService', () => {
     });
   });
 
+  describe('findOneBy', () => {
+    it('should return the user data if exists', async () => {
+      jest.spyOn(repository, 'findOne').mockResolvedValue(USER);
+      await expect(service.findOneBy(USER.email)).resolves.toEqual(USER);
+    });
+
+    it('should throw NotFoundException if user does not exists', async () => {
+      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+      await expect(service.findOneBy(NOT_FOUND_USER_EMAIL)).resolves.toBeNull();
+    });
+  });
+
   describe('create', () => {
     it('should successfully save a new user', async () => {
       jest.spyOn(repository, 'findOneBy').mockResolvedValue(null);
@@ -162,14 +178,16 @@ describe('UsersService', () => {
   });
 
   describe('update', () => {
+    const bcryptHash = jest.fn().mockResolvedValue(MOCK_HASHED_PASSWORD);
+    (bcrypt.hash as jest.Mock) = bcryptHash;
     it('should successfully update the user if exists', async () => {
       jest.spyOn(repository, 'findOneBy').mockResolvedValue(MOCK_UPDATED_USER);
       const user = await service.update(VALID_USER_ID, VALID_UPDATE_USER_DTO);
       expect(user).toEqual(MOCK_UPDATED_USER);
-      expect(repository.update).toHaveBeenCalledWith(
-        VALID_USER_ID,
-        VALID_UPDATE_USER_DTO,
-      );
+      expect(repository.update).toHaveBeenCalledWith(VALID_USER_ID, {
+        ...VALID_UPDATE_USER_DTO,
+        password: MOCK_HASHED_PASSWORD,
+      });
       expect(repository.update).toHaveBeenCalledTimes(1);
     });
 

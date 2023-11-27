@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   HealthCheckService,
   TypeOrmHealthIndicator,
@@ -16,10 +16,10 @@ export class HealthController {
     private http: HttpHealthIndicator,
   ) {}
 
-  /**
-   * Performs a health check to validate that the service is running OK.
-   * @returns details about service connection
-   */
+  @ApiOperation({
+    summary:
+      'Perform a health check to validate that the service is running OK',
+  })
   @Get('live')
   @HealthCheck()
   check() {
@@ -30,9 +30,10 @@ export class HealthController {
     ]);
   }
 
-  /**
-   * Performs a health check to validate that the database connection is successful.
-   */
+  @ApiOperation({
+    summary:
+      'Perform a health check to validate that the database connection is successful',
+  })
   @Get('ready')
   @HealthCheck()
   checkDb() {

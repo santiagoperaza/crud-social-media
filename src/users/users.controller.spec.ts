@@ -2,6 +2,17 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { PaginatedUserData } from './entities/user.entity';
+import { JwtService } from '@nestjs/jwt';
+
+const USER_ID = '3';
+const USER = {
+  id: 3,
+  email: 'test@test.com',
+  firstName: 'test3',
+  lastName: 'user',
+  createdAt: new Date('2023-11-25T21:21:46.973Z'),
+  updatedAt: new Date('2023-11-25T21:21:48.158Z'),
+};
 
 const USERS: PaginatedUserData = {
   data: [
@@ -33,6 +44,13 @@ const USERS: PaginatedUserData = {
   total: 39,
 };
 
+const VALID_CREATE_USER_DTO = {
+  email: USER.email,
+  firstName: USER.firstName,
+  lastName: USER.lastName,
+  password: '123456',
+};
+
 describe('UsersController', () => {
   let controller: UsersController;
   let service: UsersService;
@@ -45,6 +63,15 @@ describe('UsersController', () => {
           provide: UsersService,
           useValue: {
             findAll: jest.fn().mockResolvedValue(USERS),
+            findOne: jest.fn().mockResolvedValue({}),
+            create: jest.fn().mockResolvedValue(true),
+          },
+        },
+        {
+          provide: JwtService,
+          useValue: {
+            signAsync: jest.fn().mockResolvedValue(true),
+            verifyAsync: jest.fn().mockResolvedValue(true),
           },
         },
       ],
@@ -59,6 +86,22 @@ describe('UsersController', () => {
       jest.spyOn(service, 'findAll').mockResolvedValue(USERS);
 
       expect(await controller.findAll()).toBe(USERS);
+    });
+  });
+
+  describe('findOne', () => {
+    it('should return user data from service', async () => {
+      jest.spyOn(service, 'findOne').mockResolvedValue(USER);
+
+      expect(await controller.findOne(USER_ID)).toBe(USER);
+    });
+  });
+
+  describe('create', () => {
+    it('should return data after creating user in service', async () => {
+      jest.spyOn(service, 'create').mockResolvedValue(USER);
+
+      expect(await controller.create(VALID_CREATE_USER_DTO)).toBe(USER);
     });
   });
 });
