@@ -27,7 +27,7 @@ export class User {
   createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export interface PaginatedUserData {
