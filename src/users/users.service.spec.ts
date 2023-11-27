@@ -38,7 +38,6 @@ const USER = {
   firstName: 'test3',
   lastName: 'user',
   createdAt: new Date('2023-11-25T21:21:46.973Z'),
-  updatedAt: new Date('2023-11-25T21:21:46.973Z'),
 };
 
 const MOCK_UPDATED_USER = {
@@ -85,7 +84,7 @@ describe('UsersService', () => {
           useValue: {
             findOneBy: jest.fn().mockResolvedValue({}),
             findAndCount: jest.fn().mockResolvedValue(FIND_AND_COUNT),
-            create: jest.fn().mockReturnValue({}),
+            create: jest.fn().mockReturnValue(USER),
             save: jest.fn().mockResolvedValue(USER),
             update: jest.fn().mockResolvedValue(true),
             delete: jest.fn().mockResolvedValue(true),
@@ -149,7 +148,7 @@ describe('UsersService', () => {
       jest.spyOn(repository, 'findOneBy').mockResolvedValue(null);
       const user = await service.create(VALID_CREATE_USER_DTO);
       expect(user).toEqual(USER);
-      expect(repository.save).toHaveBeenCalledWith(VALID_CREATE_USER_DTO);
+      expect(repository.save).toHaveBeenCalledWith(USER);
       expect(repository.save).toHaveBeenCalledTimes(1);
     });
 

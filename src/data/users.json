@@ -1,0 +1,122 @@
+[
+    {
+        "email": "juanperez@test.com",
+        "firstName": "Juan",
+        "lastName": "Perez",
+        "password": "12345678"
+    },
+    {
+        "email": "gerardocarreras@test.com",
+        "firstName": "Gerardo",
+        "lastName": "Carreras",
+        "password": "12345678"
+    },
+    {
+        "email": "vicentebaena@test.com",
+        "firstName": "Vicente",
+        "lastName": "Baena",
+        "password": "12345678"
+    },
+    {
+        "email": "mariaheredia@test.com",
+        "firstName": "Maria",
+        "lastName": "Heredia",
+        "password": "12345678"
+    },
+    {
+        "email": "gloriasarmiento@test.com",
+        "firstName": "Gloria",
+        "lastName": "Sarmiento",
+        "password": "12345678"
+    },
+    {
+        "email": "emilioneira@test.com",
+        "firstName": "Emilio",
+        "lastName": "Neira",
+        "password": "12345678"
+    },
+    {
+        "email": "auroragalvez@test.com",
+        "firstName": "Aurora",
+        "lastName": "Galvez",
+        "password": "12345678"
+    },
+    {
+        "email": "deboragonzalez@test.com",
+        "firstName": "Debora",
+        "lastName": "Gonzalez",
+        "password": "12345678"
+    },
+    {
+        "email": "federicorodriguez@test.com",
+        "firstName": "Federico",
+        "lastName": "Rodriguez",
+        "password": "12345678"
+    },
+    {
+        "email": "victoriamartinez@test.com",
+        "firstName": "Victoria",
+        "lastName": "Martinez",
+        "password": "12345678"
+    },
+    {
+        "email": "manuelbatista@test.com",
+        "firstName": "Manuel",
+        "lastName": "Batista",
+        "password": "12345678"
+    },
+    {
+        "email": "danielajuarez@test.com",
+        "firstName": "Daniela",
+        "lastName": "Juarez",
+        "password": "12345678"
+    },
+    {
+        "email": "andreamorales@test.com",
+        "firstName": "Andrea",
+        "lastName": "Morales",
+        "password": "12345678"
+    },
+    {
+        "email": "vanesaperez@test.com",
+        "firstName": "Vanesa",
+        "lastName": "Perez",
+        "password": "12345678"
+    },
+    {
+        "email": "marianabarrios@test.com",
+        "firstName": "Mariana",
+        "lastName": "Barrios",
+        "password": "12345678"
+    },
+    {
+        "email": "emilioneira@test.com",
+        "firstName": "Emilio",
+        "lastName": "Neira",
+        "password": "12345678"
+    },
+    {
+        "email": "lucianocamino@test.com",
+        "firstName": "Luciano",
+        "lastName": "Camino",
+        "password": "12345678"
+    },
+    {
+        "email": "irmazapara@test.com",
+        "firstName": "Irma",
+        "lastName": "Zapata",
+        "password": "12345678"
+    },
+    {
+        "email": "eugeniorueda@test.com",
+        "firstName": "Eugenio",
+        "lastName": "Rueda",
+        "password": "12345678"
+    },
+    {
+        "email": "luciabueno@test.com",
+        "firstName": "Lucia",
+        "lastName": "Bueno",
+        "password": "12345678"
+    }
+]
